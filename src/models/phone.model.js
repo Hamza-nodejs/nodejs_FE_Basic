@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const moment = require('moment-timezone')
 
-const vehicleSchema = new mongoose.Schema(
+const phoneSchema = new mongoose.Schema(
     {
         make: {
             type: String,
@@ -24,17 +24,17 @@ const vehicleSchema = new mongoose.Schema(
     }
 )
 
-vehicleSchema.virtual('createdAtEST').get(function () {
+phoneSchema.virtual('createdAtEST').get(function () {
     return moment(this.createdAt).tz('America/New_York').format()
 })
 
-vehicleSchema.virtual('updatedAtEST').get(function () {
+phoneSchema.virtual('updatedAtEST').get(function () {
     return moment(this.updatedAt).tz('America/New_York').format()
 })
 
-vehicleSchema.set('toJSON', { virtuals: true })
-vehicleSchema.set('toObject', { virtuals: true })
+phoneSchema.set('toJSON', { virtuals: true })
+phoneSchema.set('toObject', { virtuals: true })
 
-const Vehicle = mongoose.model('Vehicle', vehicleSchema)
+const Phone = mongoose.model('Vehicle', phoneSchema)
 
-module.exports = Vehicle
+module.exports = Phone

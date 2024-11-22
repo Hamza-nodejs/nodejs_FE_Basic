@@ -1,5 +1,18 @@
+const statusCodes = require('http-status-codes')
+const Phone = require('../models/phone.model')
+
 const getAllPhones = async (req, res) => {
-    res.end('hello from endpoint')
+    try {
+        const phones = await Phone.find()
+        console.log('phones', phones)
+        if (!phones || phones.length == 0) {
+            return res.status(statusCodes.OK).json({ statusCode: statusCodes.OK, message: 'No phones to fetched' })
+        }
+        return res.status(statusCodes.OK).json({ statusCodes: statusCodes.OK, message: 'All phones fetched', data: phones })
+    } catch (error) {
+        console.error('error in getAllPhones', error.message)
+        return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ statuaCode: statusCodes.INTERNAL_SERVER_ERROR, message: 'internal server error' })
+    }
 }
 
 const addPhone = async (req, res) => {
