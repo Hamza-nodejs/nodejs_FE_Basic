@@ -16,7 +16,14 @@ const getAllPhones = async (req, res) => {
 }
 
 const addPhone = async (req, res) => {
-    res.end('phone added')
+    const { make, model, variant } = req.body
+    try {
+        const newPhone = await Phone.create({ make, model, variant })
+        return res.status(statusCodes.CREATED).json({ statusCodes: statusCodes.CREATED, message: 'Phone added successfully', data: newPhone })
+    } catch (error) {
+        console.error('error in addPhone', error.message)
+        return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ statuaCode: statusCodes.INTERNAL_SERVER_ERROR, message: 'internal server error' })
+    }
 }
 
 const updatePhone = async (req, res) => {

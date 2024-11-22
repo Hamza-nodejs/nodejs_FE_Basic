@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const moment = require('moment-timezone')
+const mongoose = require('mongoose');
+const moment = require('moment-timezone');
 
 const phoneSchema = new mongoose.Schema(
     {
@@ -18,23 +18,32 @@ const phoneSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        createdAtEST: {
+            type: String,
+        },
+        updatedAtEST: {
+            type: String,
+        },
     },
     {
         timestamps: true,
     }
-)
+);
 
-phoneSchema.virtual('createdAtEST').get(function () {
-    return moment(this.createdAt).tz('America/New_York').format()
-})
+// Middleware to set EST timestamps
+phoneSchema.pre('save', function (next) {
+    const now = moment.tz('America/New_York').format();
+    this.createdAtEST = this.createdAtEST || now;
+    this.updatedAtEST = now;
+    next();
+});
 
-phoneSchema.virtual('updatedAtEST').get(function () {
-    return moment(this.updatedAt).tz('America/New_York').format()
-})
+phoneSchema.pre('findOneAndUpdate', function (next) {
+    const now = moment.tz('America/New_York').format();
+    this._update.updatedAtEST = now;
+    next();
+});
 
-phoneSchema.set('toJSON', { virtuals: true })
-phoneSchema.set('toObject', { virtuals: true })
+const Phone = mongoose.model('Phone', phoneSchema);
 
-const Phone = mongoose.model('Vehicle', phoneSchema)
-
-module.exports = Phone
+module.exports = Phone;
