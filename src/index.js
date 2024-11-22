@@ -9,10 +9,16 @@ const StatusCodes = require('http-status-codes')
 const corsOptions = require('./config/cors.config')
 const connectToDatabase = require('./config/mongoose.connection')
 const routes = require('./routes')
+const { logger, logRequestDuration } = require('./utils/logger')
 
 connectToDatabase()
 const app = express()
 let PORT = process.env.PORT
+
+app.use((req, res, next) => {
+    logger.info(`${req.method} ${req.url}`)
+    next()
+})
 
 app.use(cors(corsOptions))
 app.use(helmet())
