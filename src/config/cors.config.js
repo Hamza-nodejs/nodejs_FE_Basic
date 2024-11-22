@@ -6,6 +6,6 @@ const corsOptions = {
     credentials: true,
     maxAge: 86400,
     optionsSuccessStatus: 204,
-};
+}
 
-module.exports = corsOptions;
+module.exports = corsOptions
