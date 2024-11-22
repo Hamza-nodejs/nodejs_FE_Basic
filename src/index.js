@@ -4,6 +4,7 @@ const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
+const StatusCodes = require('http-status-codes')
 
 const corsOptions = require('./config/cors.config')
 const connectToDatabase = require('./config/mongoose.connection')
@@ -21,6 +22,7 @@ app.use('/', routes)
 
 app.use((req, res) => {
     return res.status(404).json({
+        statusCode: StatusCodes.NOT_FOUND,
         success: false,
         message: 'The requested route does not exist on this server.'
     })
