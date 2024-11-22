@@ -6,7 +6,9 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser')
 
 const corsOptions = require('./config/cors.config')
+const connectToDatabase = require('./config/mongoose.connection')
 
+connectToDatabase()
 const app = express()
 let PORT = process.env.PORT
 
