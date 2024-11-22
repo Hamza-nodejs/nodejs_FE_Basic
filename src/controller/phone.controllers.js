@@ -27,11 +27,49 @@ const addPhone = async (req, res) => {
 }
 
 const updatePhone = async (req, res) => {
-    res.end('phone updated')
+    const phoneId = req.params.id
+    try {
+        const recordExist = await Phone.findById(phoneId)
+        if (!recordExist) {
+            return res.status(statusCodes.BAD_REQUEST).json({ statusCode: statusCodes.BAD_REQUEST, message: 'Phone does not exits' })
+        }
+        const updateData = req.body
+        const updatedPhone = await Phone.findByIdAndUpdate(phoneId, updateData, {
+            new: true
+            // runValidators: true,
+        })
+        console.log(updatedPhone)
+        return res.status(statusCodes.OK).json({ statusCodes: statusCodes.OK, message: 'Record updated successfully', data: updatePhone })
+
+    } catch (error) {
+        console.error('error in getAllPhones', error.message)
+        return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ statuaCode: statusCodes.INTERNAL_SERVER_ERROR, message: 'internal server error' })
+    }
 }
 
 const deletePhone = async (req, res) => {
-    res.end('phone deleted')
+    try {
+        const deletedPhone = await Phone.findByIdAndDelete(req.params.id)
+
+        if (!deletedPhone) {
+            return res.status(statusCodes.BAD_REQUEST).json({
+                statusCode: statusCodes.BAD_REQUEST,
+                message: 'Phone does not exist',
+            })
+        }
+
+        return res.status(statusCodes.OK).json({
+            statusCode: statusCodes.OK,
+            message: 'Phone deleted successfully',
+            data: deletedPhone,
+        })
+    } catch (error) {
+        console.error('Error in deletePhone:', error.message)
+        return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({
+            statusCode: statusCodes.INTERNAL_SERVER_ERROR,
+            message: 'Internal server error',
+        })
+    }
 }
 
 module.exports = {
