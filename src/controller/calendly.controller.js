@@ -1,5 +1,4 @@
 const axios = require('axios')
-require('dotenv').config()
 
 const {
     CALENDLY_CLIENT_ID,
