@@ -1,5 +1,4 @@
 const axios = require('axios')
-
 const {
     CALENDLY_CLIENT_ID,
     CALENDLY_CLIENT_SECRET,
@@ -30,21 +29,27 @@ const handleCalendlyOAuthRedirect = async (req, res) => {
         })
 
         const { access_token } = response.data
-
         accessTokenMemory = access_token
+        // console.log('Access Token Saved:', accessTokenMemory)
 
-        console.log('Access Token Saved:', accessTokenMemory)
+        const userResponse = await axios.get('https://api.calendly.com/users/me', {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        })
 
-        const userName = req.user?.name || 'no user'
-        const userEmail = req.user?.email || 'nouser@user.com'
+        console.log('User Response:', userResponse.data)
 
-        const eventType = 'group'
-        const schedulingPageUrl = `https://calendly.com/${userName}/${eventType}?prefill%5Bname%5D=${encodeURIComponent(userName)}&prefill%5Bemail%5D=${encodeURIComponent(userEmail)}`
+        const userSlug = userResponse.data.resource?.slug
 
-        res.redirect(schedulingPageUrl)
+        // console.log('User Slug:', userSlug)
+
+        const schedulingLink = `https://calendly.com/${userSlug}`
+
+        res.redirect(schedulingLink)
     } catch (error) {
-        console.error('Error exchanging code for tokens:', error.response?.data || error.message)
-        res.status(500).json({ error: 'Failed to obtain access token' })
+        console.error('Error exchanging code for tokens or creating scheduling link:', error.response?.data || error.message)
+        res.status(500).json({ error: 'Failed to create scheduling link' })
     }
 }
 
