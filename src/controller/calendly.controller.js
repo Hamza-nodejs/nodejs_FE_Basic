@@ -3,6 +3,8 @@ const {
     CALENDLY_CLIENT_ID,
     CALENDLY_CLIENT_SECRET,
     CALENDLY_REDIRECT_URI,
+    CALENDLY_HOST_SLUG
+
 } = process.env
 
 let accessTokenMemory = null
@@ -14,10 +16,13 @@ const getCalendlyAuthUrl = (req, res) => {
 
 const handleCalendlyOAuthRedirect = async (req, res) => {
     const { code } = req.query
+    const { event_name } = req.body
 
     if (!code) {
         return res.status(400).json({ error: 'Authorization code is required' })
     }
+
+    const eventToSchedule = event_name || 'internal server error meeting'
 
     try {
         const response = await axios.post('https://auth.calendly.com/oauth/token', {
@@ -30,7 +35,6 @@ const handleCalendlyOAuthRedirect = async (req, res) => {
 
         const { access_token } = response.data
         accessTokenMemory = access_token
-        // console.log('Access Token Saved:', accessTokenMemory)
 
         const userResponse = await axios.get('https://api.calendly.com/users/me', {
             headers: {
@@ -41,12 +45,15 @@ const handleCalendlyOAuthRedirect = async (req, res) => {
         console.log('User Response:', userResponse.data)
 
         const userSlug = userResponse.data.resource?.slug
+        const hostSlug = CALENDLY_HOST_SLUG
+        console.log(userSlug, hostSlug, 'userslug', 'hostslug')
+        // can implement a logic for fetching all the host events from the calendly
 
-        // console.log('User Slug:', userSlug)
+        const schedulingLink = `https://calendly.com/${hostSlug}?event_name=${encodeURIComponent(eventToSchedule)}`
 
-        const schedulingLink = `https://calendly.com/${userSlug}`
-
+        console.log('Redirecting user to:', schedulingLink)
         res.redirect(schedulingLink)
+
     } catch (error) {
         console.error('Error exchanging code for tokens or creating scheduling link:', error.response?.data || error.message)
         res.status(500).json({ error: 'Failed to create scheduling link' })
