@@ -44,3 +44,5 @@
 2024-11-26 11:53:23 info: GET /calendly/schedule-meeting
 2024-11-26 11:53:24 info: GET /calendly/schedule-meeting
 2024-11-26 11:54:18 info: GET /calendly/oauth/redirect?code=vpxpB2Th8dbbaT-mXErAFzAkuKIE1-2W8CNNmDphOT0
+2024-11-26 12:18:29 info: GET /calendly/schedule-meeting
+2024-11-26 12:18:31 info: GET /calendly/oauth/redirect?code=5zoOPKwtarsV036m9Oqwx6Pznp951J8c_tIWWsBJevE
