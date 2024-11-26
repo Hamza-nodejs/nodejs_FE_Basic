@@ -35,8 +35,8 @@ const handleCalendlyOAuthRedirect = async (req, res) => {
 
         console.log('Access Token Saved:', accessTokenMemory)
 
-        const userName = req.user?.name || 'mh408800'
-        const userEmail = req.user?.email || 'mh408800@gmail.com'
+        const userName = req.user?.name || 'no user'
+        const userEmail = req.user?.email || 'nouser@user.com'
 
         const eventType = 'group'
         const schedulingPageUrl = `https://calendly.com/${userName}/${eventType}?prefill%5Bname%5D=${encodeURIComponent(userName)}&prefill%5Bemail%5D=${encodeURIComponent(userEmail)}`
