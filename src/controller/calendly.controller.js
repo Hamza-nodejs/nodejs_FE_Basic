@@ -1,4 +1,5 @@
 const axios = require('axios')
+const statusCode = require("http-status-codes")
 const {
     CALENDLY_CLIENT_ID,
     CALENDLY_CLIENT_SECRET,
@@ -19,7 +20,7 @@ const handleCalendlyOAuthRedirect = async (req, res) => {
     const { event_name } = req.body
 
     if (!code) {
-        return res.status(400).json({ error: 'Authorization code is required' })
+        return res.status(statusCode.BAD_REQUEST).json({ error: 'Authorization code is required' })
     }
 
     const eventToSchedule = event_name || 'internal server error meeting'
@@ -56,7 +57,7 @@ const handleCalendlyOAuthRedirect = async (req, res) => {
 
     } catch (error) {
         console.error('Error exchanging code for tokens or creating scheduling link:', error.response?.data || error.message)
-        res.status(500).json({ error: 'Failed to create scheduling link' })
+        res.status(statusCode.INTERNAL_SERVER_ERROR).json({ error: 'Failed to create scheduling link' })
     }
 }
 
