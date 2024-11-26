@@ -31,7 +31,7 @@ Before running this project, make sure you have:
    npm run start
    ````
 
-redirect url
+3. Endpoint for meeting scheduling
 
 ```bash
 http://localhost:4000/calendly/schedule-meeting
