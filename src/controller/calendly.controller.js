@@ -52,5 +52,3 @@ module.exports = {
     getCalendlyAuthUrl,
     handleCalendlyOAuthRedirect,
 }
-
-// http://localhost:4000/calendly/schedule-meeting
