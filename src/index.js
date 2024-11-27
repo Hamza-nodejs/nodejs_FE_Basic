@@ -5,6 +5,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const StatusCodes = require('http-status-codes')
+const session = require('express-session')
 
 const corsOptions = require('./config/cors.config')
 const connectToDatabase = require('./config/mongoose.connection')
@@ -14,6 +15,14 @@ const { logger, logRequestDuration } = require('./utils/logger')
 connectToDatabase()
 const app = express()
 let PORT = process.env.PORT
+
+app.use(session({
+    secret: process.env.EXPRESS_SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+    // set it true for https
+    cookie: { secure: false }
+}))
 
 app.use((req, res, next) => {
     logger.info(`${req.method} ${req.url}`)
