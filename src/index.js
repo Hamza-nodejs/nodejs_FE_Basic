@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const StatusCodes = require('http-status-codes')
 
 const corsOptions = require('./config/cors.config')
+const sessionConfig = require("./middleware/session")
 const connectToDatabase = require('./config/mongoose.connection')
 const { logger, logRequestDuration } = require('./utils/logger')
 
@@ -23,7 +24,7 @@ app.use(cors(corsOptions))
 app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
+sessionConfig(app)
 app.use((req, res) => {
     return res.status(404).json({
         statusCode: StatusCodes.NOT_FOUND,
