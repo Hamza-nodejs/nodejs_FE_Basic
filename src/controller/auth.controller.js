@@ -39,7 +39,7 @@ exports.loginUser = async (req, res) => {
         }
         // storing the user in the session
         req.session.user = { id: userExist?._id, name: userExist?.name }
-        return res.status(statusCode.OK).json({statusCode: statusCode.OK, message: "login successfully", data: })
+        return res.status(statusCode.OK).json({ statusCode: statusCode.OK, message: "login successfully" })
 
 
     } catch (error) {
