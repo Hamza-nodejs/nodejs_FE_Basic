@@ -18,3 +18,10 @@
 2024-12-02 12:56:53 info: POST /api/auth/register
 2024-12-02 12:57:01 info: POST /auth/login
 2024-12-02 12:57:22 info: POST /api/auth/login
+2024-12-02 12:59:10 info: POST /api/auth/login
+2024-12-02 12:59:29 info: GET /api/home/details
+2024-12-02 13:02:45 info: GET /api/home/details
+2024-12-02 13:04:59 info: POST /api/auth/login
+2024-12-02 13:05:02 info: GET /api/home/details
+2024-12-02 13:05:26 info: POST /api/auth/logout
+2024-12-02 13:05:29 info: GET /api/home/details

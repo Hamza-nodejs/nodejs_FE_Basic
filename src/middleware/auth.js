@@ -1,15 +1,12 @@
 const statusCode = require('http-status-codes')
 
-
 const authentication = (req, res, next) => {
-    const sessionId = req.headers['authorization']
-    if (!sessionId) {
-        return res.status(statusCode.FORBIDDEN).json({ message: 'Session ID is required' })
-    }
-
-    if (!req.session.user || req.sessionID !== sessionId) {
+    if (!req.session.user) {
         return res.status(statusCode.FORBIDDEN).json({ message: 'Unauthorized access' })
     }
+
+    console.log('Authenticated User:', req.session.user)
+
     next()
 }
 
