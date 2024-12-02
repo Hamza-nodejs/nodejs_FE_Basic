@@ -8,7 +8,6 @@ const StatusCodes = require('http-status-codes')
 
 const corsOptions = require('./config/cors.config')
 const connectToDatabase = require('./config/mongoose.connection')
-const routes = require('./routes')
 const { logger, logRequestDuration } = require('./utils/logger')
 
 connectToDatabase()
@@ -24,7 +23,6 @@ app.use(cors(corsOptions))
 app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/', routes)
 
 app.use((req, res) => {
     return res.status(404).json({
