@@ -7,7 +7,10 @@ module.exports = (app) => {
             resave: false,
             saveUninitialized: false,
             cookie: {
-                maxAge: 1000 * 60 * 60 * 24
+                httpOnly: true,
+                maxAge: 1000 * 60 * 60 * 24,
+                // maxAge: 1000 * 60,  // 1 minute
+                sameSite: 'Strict'
             }
         })
     )

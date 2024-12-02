@@ -25,3 +25,12 @@
 2024-12-02 13:05:02 info: GET /api/home/details
 2024-12-02 13:05:26 info: POST /api/auth/logout
 2024-12-02 13:05:29 info: GET /api/home/details
+2024-12-02 14:01:13 info: GET /api/home/details
+2024-12-02 14:01:14 info: GET /api/home/details
+2024-12-02 14:01:17 info: POST /api/auth/login
+2024-12-02 14:02:26 info: GET /api/home/details
+2024-12-02 14:02:29 info: POST /api/auth/login
+2024-12-02 14:02:31 info: GET /api/home/details
+2024-12-02 14:02:53 info: GET /api/home/details
+2024-12-02 14:03:18 info: GET /api/home/details
+2024-12-02 14:04:17 info: GET /api/home/details
