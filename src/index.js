@@ -26,7 +26,7 @@ app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 sessionConfig(app)
-app.use(routes)
+app.use('/api', routes)
 app.use((req, res) => {
     return res.status(404).json({
         statusCode: StatusCodes.NOT_FOUND,

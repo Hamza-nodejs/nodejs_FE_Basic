@@ -9,6 +9,10 @@ exports.registerUser = async (req, res) => {
         if (!name || !password || !email) {
             return res.status(statusCode.BAD_REQUEST).json({ statusCode: statusCode.BAD_REQUEST, message: 'req.body is missing' })
         }
+        const checkUser = await User.findOne({ email })
+        if (checkUser) {
+            return res.status(statusCode.CONFLICT).json({ statusCode: statusCode.CONFLICT, message: ' user already exists' })
+        }
         const hashPassword = await passwordHashing(password)
         const newUser = await User.create({
             name: name,
@@ -39,6 +43,7 @@ exports.loginUser = async (req, res) => {
         }
         // storing the user in the session
         req.session.user = { id: userExist?._id, name: userExist?.name }
+        console.log(req.session.user)
         return res.status(statusCode.OK).json({ statusCode: statusCode.OK, message: 'login successfully' })
 
 
@@ -47,3 +52,18 @@ exports.loginUser = async (req, res) => {
         return res.status(statusCode.INTERNAL_SERVER_ERROR).json({ statusCode: statusCode.INTERNAL_SERVER_ERROR, message: 'something went wrong', error: error.message })
     }
 }
+
+exports.logoutUser = (req, res) => {
+    try {
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(statusCode.INTERNAL_SERVER_ERROR).json({ message: 'Unable to logout' })
+            }
+            return res.status(statusCode.OK).json({ message: 'Logged out successfully' })
+        })
+    } catch (error) {
+        console.error('Error during logout:', error)
+        return res.status(statusCode.INTERNAL_SERVER_ERROR).json({ message: 'Something went wrong during logout', error: error.message })
+    }
+}
+

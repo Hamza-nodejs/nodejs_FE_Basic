@@ -7,3 +7,14 @@
 2024-12-02 12:16:18 info: POST /auth/login
 2024-12-02 12:16:24 info: POST /auth/login
 2024-12-02 12:16:26 info: POST /auth/login
+2024-12-02 12:38:41 info: POST /auth/login
+2024-12-02 12:53:09 info: GET /home/details
+2024-12-02 12:54:00 info: GET /home/details
+2024-12-02 12:54:05 info: GET /api/home/details
+2024-12-02 12:54:22 info: POST /auth/register
+2024-12-02 12:54:31 info: POST /api/auth/register
+2024-12-02 12:56:32 info: POST /api/auth/register
+2024-12-02 12:56:41 info: POST /api/auth/register
+2024-12-02 12:56:53 info: POST /api/auth/register
+2024-12-02 12:57:01 info: POST /auth/login
+2024-12-02 12:57:22 info: POST /api/auth/login
