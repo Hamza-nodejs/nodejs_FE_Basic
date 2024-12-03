@@ -2,8 +2,6 @@ const express = require('express')
 const calendlyRoutes = express.Router()
 const calendlyController = require('../controller/calendly.controller')
 
-// mock jwt token for testing purpose
-
 calendlyRoutes.use((req, res, next) => {
     req.user = {
         name: 'mh408800',
@@ -14,5 +12,8 @@ calendlyRoutes.use((req, res, next) => {
 
 calendlyRoutes.get('/schedule-meeting', calendlyController.getCalendlyAuthUrl)
 calendlyRoutes.get('/oauth/redirect', calendlyController.handleCalendlyOAuthRedirect)
+calendlyRoutes.get('/host/events', calendlyController.fetchHostEvents)
+calendlyRoutes.post('/webhook', calendlyController.calendlyWebHook)
+calendlyRoutes.post('/webhook/receive', calendlyController.handleCalendlyWebhook)
 
 module.exports = calendlyRoutes
