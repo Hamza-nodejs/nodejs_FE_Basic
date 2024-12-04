@@ -1,4 +1,6 @@
 const statusCodes = require('http-status-codes')
+const { HTTPError } = require('./response')
+
 
 const validationCatches = (validation) => async (req, res, next) => {
     try {
